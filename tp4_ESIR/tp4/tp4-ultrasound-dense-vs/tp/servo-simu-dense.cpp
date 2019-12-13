@@ -165,14 +165,65 @@ int main()
         vpDisplay::flush(simulator->Image);
         rect_ok = vpDisplay::getClickUp(simulator->Image, ipf, button, false);
     }
-    vpDisplay::display(simulator->Image);
-    vpDisplay::displayRectangle(simulator->Image, ip0, ipf, vpColor::red);
-    vpDisplay::flush(simulator->Image);
 
     int Wmin = (int)ip0.get_u();
     int Wmax = (int)ipf.get_u();
     int Hmin = (int)ip0.get_v();
     int Hmax = (int)ipf.get_v();
+
+    std::cout<<"Wmin: "<<Wmin<<std::endl;
+    std::cout<<"Wmax: "<<Wmax<<std::endl;
+    std::cout<<"Hmin: "<<Hmin<<std::endl;
+    std::cout<<"Hmax: "<<Hmax<<std::endl;
+
+    enum REGION_TYPE {LARGE, MEDIUM, SMALL};
+
+    //REGION_TYPE region_type = LARGE;
+    //REGION_TYPE region_type = MEDIUM;
+    REGION_TYPE region_type = SMALL;
+    
+
+    switch(region_type)
+    {
+        case LARGE:
+            Wmin = 82;
+            Wmax = 250;
+            Hmin = 86;
+            Hmax = 231;
+        break;
+        case MEDIUM:
+            Wmin = 129;
+            Wmax = 219;
+            Hmin = 102;
+            Hmax = 155;
+        break;
+        case SMALL:
+            Wmin = 152;
+            Wmax = 162;
+            Hmin = 135;
+            Hmax = 144;
+        break;
+    }
+
+
+    ip0.set_u(Wmin);
+    ipf.set_u(Wmax);
+    ip0.set_v(Hmin);
+    ipf.set_v(Hmax);
+
+    vpDisplay::display(simulator->Image);
+    vpDisplay::displayRectangle(simulator->Image, ip0, ipf, vpColor::blue);
+    vpDisplay::flush(simulator->Image);
+
+
+
+    vpDisplay::display(simulator->Image);
+    vpDisplay::displayRectangle(simulator->Image, ip0, ipf, vpColor::red);
+    vpDisplay::flush(simulator->Image);
+
+    
+
+
 
     int ROI_width, ROI_height; //width and height (size) of ROI in number of pixels
     ROI_width = Wmax-Wmin+1;
@@ -404,9 +455,9 @@ int main()
             // Apply sinusoidal motion to the volume to simulate physiological motion
 #ifdef TO_COMPLETE
 			double A = 0.005*0;
-            double freq = 0.2*5;
+            double freq = 0.2;
 			double t = A * sin(time * freq * 2.0 * M_PI);
-			double r = vpMath::rad(5) * sin(time * freq * 2.0 * M_PI)*0;
+			double r = vpMath::rad(5)*0 * sin(time * freq * 2.0 * M_PI);
          
             // Question 11
             // Same than Question 1 but with sisusoidal amplitude of 0.02 (meter)
@@ -460,7 +511,10 @@ int main()
 
             // A mouse click to exit the loop
             if (vpDisplay::getClick(simulator->Image, false)) {
-                break;
+                while(!vpDisplay::getClick(simulator->Image, false))
+                {
+
+                }
             }
         }
     }
