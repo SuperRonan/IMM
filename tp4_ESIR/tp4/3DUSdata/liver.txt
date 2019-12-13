@@ -1,0 +1,12 @@
+sizeX 308
+sizeY 278
+sizeZ 218
+spacingX 0.0005
+spacingY 0.0005
+spacingZ 0.0005
+minX 0
+minY 0
+minZ 0
+boxsizeX 308
+boxsizeY 278
+boxsizeZ 218

@@ -1,0 +1,14 @@
+# Package Information for pkg-config
+
+prefix=/private/student/7/67/16007067/tp4_ESIR/third-party/visp-3.1.0-build
+exec_prefix=${prefix}
+libdir=${prefix}/lib64
+includedir=${prefix}/include
+
+Name: ViSP
+Description: Visual Servoing Platform
+URL: https://visp.inria.fr
+Version: 3.1.0
+Libs:  ${libdir}/libvisp_core.so.3.1.0 ${libdir}/libvisp_gui.so.3.1.0 ${libdir}/libvisp_imgproc.so.3.1.0 ${libdir}/libvisp_io.so.3.1.0 ${libdir}/libvisp_klt.so.3.1.0 ${libdir}/libvisp_me.so.3.1.0 ${libdir}/libvisp_sensor.so.3.1.0 ${libdir}/libvisp_ar.so.3.1.0 ${libdir}/libvisp_blob.so.3.1.0 ${libdir}/libvisp_robot.so.3.1.0 ${libdir}/libvisp_visual_features.so.3.1.0 ${libdir}/libvisp_vs.so.3.1.0 ${libdir}/libvisp_vision.so.3.1.0 ${libdir}/libvisp_detection.so.3.1.0 ${libdir}/libvisp_mbt.so.3.1.0 ${libdir}/libvisp_tt.so.3.1.0 ${libdir}/libvisp_tt_mi.so.3.1.0 /usr/lib64/liblapack.so /usr/lib64/libblas.so /usr/lib64/libxml2.so /usr/lib64/libpthread.so /usr/lib64/libz.so /usr/lib64/libSM.so /usr/lib64/libICE.so /usr/lib64/libX11.so /usr/lib64/libXext.so /usr/lib64/libjpeg.so /usr/lib64/libpng.so /usr/lib64/libv4l2.so /usr/lib64/libv4lconvert.so /usr/lib64/libdc1394.so
+
+Cflags:  -I${includedir} -fopenmp -I/usr/include/eigen3 -I/usr/include/libxml2 -I/usr/include
