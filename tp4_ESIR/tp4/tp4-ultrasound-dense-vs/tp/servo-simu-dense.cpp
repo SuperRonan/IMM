@@ -30,6 +30,24 @@ using namespace std;
 
 int main()
 {
+    enum REGION_TYPE {LARGE, MEDIUM, SMALL};
+    REGION_TYPE region_type = LARGE;
+    //REGION_TYPE region_type = MEDIUM;
+    //REGION_TYPE region_type = SMALL;
+
+    double lambda = 0.4;
+    double mu = 0.05;
+
+    bool motion = 0;
+    bool reaching = 1;
+
+    double displacement  = 0.01;
+    double radDisplacement = 2;
+
+    double A = 0.005 * motion;
+    double rotA = vpMath::rad(5) * motion;
+    double freq = 0.2;
+
 
     ///////////////////////////////////////////////////////////////////////
     //
@@ -176,11 +194,9 @@ int main()
     std::cout<<"Hmin: "<<Hmin<<std::endl;
     std::cout<<"Hmax: "<<Hmax<<std::endl;
 
-    enum REGION_TYPE {LARGE, MEDIUM, SMALL};
+    
 
-    //REGION_TYPE region_type = LARGE;
-    //REGION_TYPE region_type = MEDIUM;
-    REGION_TYPE region_type = SMALL;
+
     
 
     switch(region_type)
@@ -352,10 +368,13 @@ int main()
     // a relative roration of 4 deg around z axis
     //
     //deg has to be conveted in rad with vpMath::rad()
-    vpPoseVector offset = vpPoseVector(vpTranslationVector(0.002,0.002,0.002), vpThetaUVector(vpMath::rad(2.0),vpMath::rad(2.0),vpMath::rad(4.0)));
-    for (size_t i = 0; i < 6; ++i)
+    vpPoseVector offset = vpPoseVector(vpTranslationVector(displacement,displacement,displacement), vpThetaUVector(vpMath::rad(radDisplacement),vpMath::rad(radDisplacement),vpMath::rad(radDisplacement*2)));
+    if(reaching)
     {
-        world_poseProbe[i] += offset[i];
+        for (size_t i = 0; i < 6; ++i)
+        {
+            world_poseProbe[i] += offset[i];
+        }
     }
      
 
@@ -425,7 +444,6 @@ int main()
             //
             VisualFeatureError = CurrentFeatures - DesiredFeatures; // Compute the visual feature error
             VisualFeatureErrorSum += VisualFeatureError;
-            double lambda = 0.4;
             probe_velocity = - lambda * (Lspi * VisualFeatureError); // Compute the probe velocity
             //std::cout << probe_velocity << std::endl;
 
@@ -435,8 +453,7 @@ int main()
 #ifdef TO_COMPLETE
             // Question 12
             // Compute the integral term and add it to the control law to compensate the tracking error
-            double opt_mu = 0.01;
-            probe_velocity -= opt_mu * (Lspi * VisualFeatureErrorSum);
+            probe_velocity -= mu * (Lspi * VisualFeatureErrorSum);
 #endif
 
 
@@ -454,10 +471,9 @@ int main()
 
             // Apply sinusoidal motion to the volume to simulate physiological motion
 #ifdef TO_COMPLETE
-			double A = 0.005*0;
-            double freq = 0.2;
+			
 			double t = A * sin(time * freq * 2.0 * M_PI);
-			double r = vpMath::rad(5)*0 * sin(time * freq * 2.0 * M_PI);
+			double r = rotA * sin(time * freq * 2.0 * M_PI);
          
             // Question 11
             // Same than Question 1 but with sisusoidal amplitude of 0.02 (meter)
